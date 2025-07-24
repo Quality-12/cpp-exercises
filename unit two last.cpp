@@ -1,16 +1,16 @@
 #include<iostream>
 using namespace std;
 int main(){
-int a,b;
-cout<<"enter two numbers:";
-cin>>a>>b;
+int age;
+cout<<"enter the age:";
+cin>>age;
 try{
-	if(b==0){
-	throw"you can't divide by zero";
+	if(age<0 ,age>150){
+	throw"you can't find this age";
 		
 	}
 	
-cout<<"result:"<<a/b<<endl;	
+cout<<"age:"<< age<<endl;	
 	
 	
 }	
