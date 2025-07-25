@@ -1,0 +1,130 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Class for a book
+class Book {
+public:
+    string title;
+    string author;
+    bool isBorrowed;
+
+    Book(string t, string a) {
+        title = t;
+        author = a;
+        isBorrowed = false;
+    }
+};
+
+// Class for a user
+class User {
+public:
+    string name;
+
+    User(string n) {
+        name = n;
+    }
+};
+
+// Class for the library
+class Library {
+public:
+    vector<Book> books;
+
+    void addBook(string title, string author) {
+        books.push_back(Book(title, author));
+        cout << "Book added: " << title << " by " << author << endl;
+    }
+
+    void searchBook(string title) {
+        for (Book& b : books) {
+            if (b.title == title) {
+                cout << "Found: " << b.title << " by " << b.author;
+                if (b.isBorrowed)
+                    cout << " (Borrowed)";
+                else
+                    cout << " (Available)";
+                cout << endl;
+                return;
+            }
+        }
+        cout << "Book not found." << endl;
+    }
+
+    void borrowBook(string title) {
+        for (Book& b : books) {
+            if (b.title == title && !b.isBorrowed) {
+                b.isBorrowed = true;
+                cout << "You borrowed: " << b.title << endl;
+                return;
+            }
+        }
+        cout << "Book is not available." << endl;
+    }
+
+    void returnBook(string title) {
+        for (Book& b : books) {
+            if (b.title == title && b.isBorrowed) {
+                b.isBorrowed = false;
+                cout << "You returned: " << b.title << endl;
+                return;
+            }
+        }
+        cout << "Book was not borrowed or doesn't exist." << endl;
+    }
+};
+
+// Main function
+int main() {
+    Library lib;
+    int choice;
+    string title, author, username;
+
+    cout << "Welcome to the Library System!" << endl;
+
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Add Book\n";
+        cout << "2. Search Book\n";
+        cout << "3. Borrow Book\n";
+        cout << "4. Return Book\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // to handle newline
+
+        switch (choice) {
+            case 1:
+                cout << "Enter book title: ";
+                getline(cin, title);
+                cout << "Enter book author: ";
+                getline(cin, author);
+                lib.addBook(title, author);
+                break;
+            case 2:
+                cout << "Enter book title to search: ";
+                getline(cin, title);
+                lib.searchBook(title);
+                break;
+            case 3:
+                cout << "Enter book title to borrow: ";
+                getline(cin, title);
+                lib.borrowBook(title);
+                break;
+            case 4:
+                cout << "Enter book title to return: ";
+                getline(cin, title);
+                lib.returnBook(title);
+                break;
+            case 5:
+                cout << "Goodbye! 📚" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Try again." << endl;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
